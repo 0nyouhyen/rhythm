@@ -95,6 +95,7 @@ public class DialogueRhythm : MonoBehaviour
     IEnumerator ShowCustomerDialogue()
     {
         CustomerBubble.SetActive(true);
+
         while (currentBeat < customerDialogue.Length)
         {
             // 현재 Customer 노트를 노란색으로 표시
@@ -137,6 +138,7 @@ public class DialogueRhythm : MonoBehaviour
     }
 
 
+
     // =========================================================
     // Player / Customer 입력
     // =========================================================
@@ -144,7 +146,6 @@ public class DialogueRhythm : MonoBehaviour
     void Update()
     {
         // =====================================================
-        // ★ 2번
         // Customer 턴에서는 DFJK 입력을 전부 피드백만 표시
         // =====================================================
 
@@ -155,9 +156,14 @@ public class DialogueRhythm : MonoBehaviour
         }
 
 
-        // Player 턴인데 MISS 처리 중이면 입력하지 않음
+        // =====================================================
+        // MISS 처리 중에는 입력 판정은 하지 않고
+        // DFJK 입력 피드백만 표시
+        // =====================================================
+
         if (processingMiss)
         {
+            CheckPlayerInputFeedback();
             return;
         }
 
@@ -167,7 +173,7 @@ public class DialogueRhythm : MonoBehaviour
 
 
         // =====================================================
-        // 0.9초를 초과하면 MISS
+        // 노트 시간이 지나면 MISS
         // =====================================================
 
         if (noteTimer > noteTimeLimit)
@@ -178,7 +184,6 @@ public class DialogueRhythm : MonoBehaviour
 
 
         // =====================================================
-        // ★ 2번
         // Player 턴에서는 DFJK를 전부 확인
         // =====================================================
 
@@ -255,6 +260,44 @@ public class DialogueRhythm : MonoBehaviour
     }
 
 
+
+    // =========================================================
+    // ★ MISS 처리 중 입력 피드백
+    // =========================================================
+
+    void CheckPlayerInputFeedback()
+    {
+        // D
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            WrongPlayerInput(0);
+            return;
+        }
+
+        // F
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            WrongPlayerInput(1);
+            return;
+        }
+
+        // J
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            WrongPlayerInput(2);
+            return;
+        }
+
+        // K
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            WrongPlayerInput(3);
+            return;
+        }
+    }
+
+
+
     // =========================================================
     // ★ Customer 턴 잘못된 입력 확인
     // =========================================================
@@ -291,6 +334,7 @@ public class DialogueRhythm : MonoBehaviour
     }
 
 
+
     // =========================================================
     // ★ Player 잘못된 입력
     // =========================================================
@@ -309,6 +353,7 @@ public class DialogueRhythm : MonoBehaviour
             );
         }
     }
+
 
 
     // =========================================================
@@ -347,6 +392,7 @@ public class DialogueRhythm : MonoBehaviour
     }
 
 
+
     // =========================================================
     // 입력 타이밍 판정
     // =========================================================
@@ -359,7 +405,7 @@ public class DialogueRhythm : MonoBehaviour
             "초"
         );
 
-        // 0.5초보다 빠르면 MISS
+        // 0.4초보다 빠르면 MISS
         if (noteTimer < perfectStartTime)
         {
             Debug.Log("너무 빠름 → MISS!");
@@ -368,7 +414,7 @@ public class DialogueRhythm : MonoBehaviour
             return;
         }
 
-        // 0.5 ~ 0.9초면 HIT
+        // 0.4 ~ 0.8초면 HIT
         if (noteTimer <= noteTimeLimit)
         {
             Debug.Log("HIT!");
@@ -376,6 +422,7 @@ public class DialogueRhythm : MonoBehaviour
             PlayerInput();
         }
     }
+
 
 
     // =========================================================
@@ -435,6 +482,7 @@ public class DialogueRhythm : MonoBehaviour
             Debug.Log("플레이어의 대사가 모두 끝났습니다.");
         }
     }
+
 
 
     // =========================================================
@@ -499,6 +547,7 @@ public class DialogueRhythm : MonoBehaviour
         {
             HighlightCurrentPlayerNote();
         }
+
         // 모든 노트를 끝냈다면
         else
         {
@@ -510,6 +559,7 @@ public class DialogueRhythm : MonoBehaviour
         // MISS 처리 종료
         processingMiss = false;
     }
+
 
 
     // =========================================================
@@ -527,6 +577,7 @@ public class DialogueRhythm : MonoBehaviour
             );
         }
     }
+
 
 
     // =========================================================
@@ -562,6 +613,7 @@ public class DialogueRhythm : MonoBehaviour
     }
 
 
+
     // =========================================================
     // 노트 색상 설정
     // =========================================================
@@ -580,6 +632,7 @@ public class DialogueRhythm : MonoBehaviour
             }
         }
     }
+
 
 
     // =========================================================
