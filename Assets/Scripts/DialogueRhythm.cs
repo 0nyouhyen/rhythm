@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -38,6 +38,7 @@ public class DialogueRhythm : MonoBehaviour
     [Header("플레이어 노트 판정 시간")]
     public float perfectStartTime = 0.4f;
     public float noteTimeLimit = 0.8f;
+
 
     string[] customerDialogue =
     {
@@ -81,7 +82,6 @@ public class DialogueRhythm : MonoBehaviour
         playerText.text = "";
 
         musicSource.Play();
-        musicSource.volume = 0.1f;
 
         CustomerBubble.SetActive(false);
         PlayerBubble.SetActive(false);
