@@ -13,6 +13,9 @@ public class DialogueRhythm : MonoBehaviour
     public GameObject PlayerBubble;
     public GameObject CustomerBubble;
 
+    [Header("노래")]
+    public AudioSource musicSource;
+
     [Header("Customer 노트 Image (D, F, J, K)")]
     public Image[] customerNotes = new Image[4];
 
@@ -35,7 +38,6 @@ public class DialogueRhythm : MonoBehaviour
     [Header("플레이어 노트 판정 시간")]
     public float perfectStartTime = 0.4f;
     public float noteTimeLimit = 0.8f;
-
 
     string[] customerDialogue =
     {
@@ -77,6 +79,9 @@ public class DialogueRhythm : MonoBehaviour
     {
         customerText.text = "";
         playerText.text = "";
+
+        musicSource.Play();
+        musicSource.volume = 0.1f;
 
         CustomerBubble.SetActive(false);
         PlayerBubble.SetActive(false);
@@ -299,7 +304,7 @@ public class DialogueRhythm : MonoBehaviour
 
 
     // =========================================================
-    // ★ Customer 턴 잘못된 입력 확인
+    // ★ Customer 턴 플레이어 입력 확인
     // =========================================================
 
     void CheckCustomerWrongInput()
@@ -336,12 +341,12 @@ public class DialogueRhythm : MonoBehaviour
 
 
     // =========================================================
-    // ★ Player 잘못된 입력
+    // ★ Player 플레이어 입력
     // =========================================================
 
     void WrongPlayerInput(int index)
     {
-        Debug.Log("잘못된 입력 → Player 노트 " + index + " 파란색");
+        Debug.Log("플레이어 입력 → Player 노트 " + index + " 파란색");
 
         if (index >= 0 && index < playerNotes.Length)
         {
@@ -357,7 +362,7 @@ public class DialogueRhythm : MonoBehaviour
 
 
     // =========================================================
-    // ★ 잘못된 입력 파란색 피드백
+    // ★ 플레이어 입력 파란색 피드백
     // =========================================================
 
     IEnumerator FlashWrongInput(
